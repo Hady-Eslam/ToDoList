@@ -1,0 +1,45 @@
+{% extends 'Notes/base.html' %}
+{% load static %}
+
+{% block title %} My ToDo List {% endblock %}
+
+{% block content %}
+
+<br />
+
+<h1 class="text-center">ToDo List</h1>
+
+{% csrf_token %}
+
+
+{% if request.flash_message.exists.success_create_note %}
+    {% include 'Notes/utilts/model.html' with ModelMessage=request.flash_message.success_create_note %}
+{% endif %}
+
+
+{% for Note in object_list %}
+
+    <div class="media position-relative">
+        <input class="form-check-input CheckBox" type="checkbox" note-id="{{ Note.id }}" id="Check_{{ Note.id }}"
+            note-url="{% url 'Notes:Note' Note.id %}" onclick="ChangeState(this)" isChecked="{{ Note.is_done }}">
+        <label class="form-check-label">
+            <div class="media-body">
+                <h5 class="mt-0" id="Title_{{ Note.id }}" class="stretched-link">{{ Note.title }}</h5>
+                <p id="Note_{{ Note.id }}">{{ Note.note }}</p>
+            </div>
+        </label>
+    </div>
+
+    <br />
+
+{% endfor %}
+
+{% endblock %}
+
+
+
+{% block scripts %}
+<script src="{% static 'Notes/javascript/Notes.js' %}"></script>
+{% endblock %}
+
+

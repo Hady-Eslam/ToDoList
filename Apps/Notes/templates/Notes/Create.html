@@ -1,0 +1,57 @@
+{% extends 'Notes/base.html' %}
+{% load static %}
+
+{% block title %} Create Note {% endblock %}
+
+{% block content %}
+
+<br />
+
+<h1 class="text-center">Create New Note</h1>
+
+<br />
+
+
+<form method="post" id="Form">
+
+    {% csrf_token %}
+
+    <div class="form-row">
+
+        <div class="col-md-8 mb-3">
+            <label for="title">Note Title</label>
+            <input type="text" class="form-control" name="title" id="title" required
+                value="{{ form.title.value|default:'' }}" placeholder="Enter Note Title Here">
+            <small style="color: #dc3545;" id="title-errors">
+                {{ form.title.errors }}
+            </small>
+        </div>
+    
+    </div>
+
+    <div class="form-row">
+
+        <div class="col-md-8 mb-3">
+            <label for="note">Note</label>
+            <textarea class="form-control" id="note" name="note" required rows="4"
+                placeholder="Enter Note Here">{{ form.note.value|default:'' }}</textarea>
+            <small style="color: #dc3545;" id="note-errors">
+                {{ form.note.errors }}
+            </small>
+        </div>
+    
+    </div>
+
+    <button class="btn btn-success" type="submit">Create</button>
+
+</form>
+
+
+{% endblock  %}
+
+
+
+{% block scripts %}
+<script src="{% static 'Notes/javascript/Create.js' %}"></script>
+{% endblock %}
+
